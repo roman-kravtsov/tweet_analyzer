@@ -1,6 +1,4 @@
 # TextMiningProject
 
-### 1 Install requirements
-```pip install -r requirements.txt```
-
-https://medium.com/@onejohi/building-a-simple-rest-api-with-python-and-flask-b404371dc699
+### To start the server
+* On Windows run `setup_run.bat` from cmd
