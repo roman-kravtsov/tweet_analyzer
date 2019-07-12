@@ -8,6 +8,10 @@ app = Flask(__name__)
 graph = tf.get_default_graph()
 
 
+@app.route('/')
+def index():
+    return "Hello, World!"
+
 @app.route('/predict', methods=['POST'])
 def predict():
     tweet = request.get_json()['tweet']
