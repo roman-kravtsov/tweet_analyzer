@@ -1,5 +1,5 @@
 import pandas as pd
-from nn.src.util.data_util import get_data
+from classification.src.util.data_util import get_data
 
 from sklearn.svm import SVC
 from sklearn import metrics

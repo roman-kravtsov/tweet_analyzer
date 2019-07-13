@@ -1,7 +1,7 @@
 import pandas as pd
 
-from nn.src.util.data_util import get_data
-from nn.src.util.preprocessor import preprocess
+from classification.src.util.data_util import get_data
+from classification.src.util.preprocessor import preprocess
 
 from sklearn.svm import SVC
 from sklearn import metrics

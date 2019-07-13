@@ -1,7 +1,7 @@
-from nn.src.util.preprocessor import preprocess
-from nn.src.util.features_extractor import get_word2vec_features, update_labels
-from nn.src.util.data_util import get_data
-from nn.src.util.model import get_model_word2vec_cnn, plot_training_results
+from classification.src.util.preprocessor import preprocess
+from classification.src.util.features_extractor import get_word2vec_features, update_labels
+from classification.src.util.data_util import get_data
+from classification.src.util.model import get_model_word2vec_cnn, plot_training_results
 
 from sklearn.metrics import confusion_matrix
 
