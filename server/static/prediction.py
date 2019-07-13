@@ -3,22 +3,24 @@ import numpy as np
 from keras.models import model_from_json
 from gensim.models import Word2Vec
 
-from static.preprocess import clean_tweet
+from server.static.preprocess import clean_tweet
+
+root_path = "./server/models/"
 
 
 def load_nn_model():
     # load json and create model
-    with open('./models/model.json', 'r') as model_file:
+    with open(root_path + 'model.json', 'r') as model_file:
         loaded_model = model_from_json(model_file.read())
 
     # load weights into new model
-    loaded_model.load_weights("./models/model.h5")
+    loaded_model.load_weights(root_path + "model.h5")
 
     return loaded_model
 
 
 def load_word2vec_model():
-    return Word2Vec.load("./models/word2vec.model")
+    return Word2Vec.load(root_path + "word2vec.model")
 
 
 def get_features(word2vec_model, tweet_words, max_tweet_len):

@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request, jsonify, make_response
 
-from static.prediction import get_prediction_for_tweet
+from server.static.prediction import get_prediction_for_tweet
 import tensorflow as tf
 
 app = Flask(__name__)
