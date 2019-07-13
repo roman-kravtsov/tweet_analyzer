@@ -4,31 +4,27 @@
       <v-toolbar-title class="headline text-uppercase">
         <span>Tweet Analyzer</span>
       </v-toolbar-title>
-      <v-spacer />
     </v-toolbar>
-    <v-spacer/>
-    <Introduction />
+    <v-spacer></v-spacer>
     <Analyzer />
     <Footer />
   </v-app>
 </template>
 
 <script>
-import Footer from './components/Footer'
-import Analyzer from './components/Analyzer'
-import Introduction from './components/Introduction'
+import Footer from "./components/Footer";
+import Analyzer from "./components/Analyzer";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Footer,
-    Analyzer,
-    Introduction
+    Analyzer
   },
-  data () {
+  data() {
     return {
       //
-    }
+    };
   }
-}
+};
 </script>

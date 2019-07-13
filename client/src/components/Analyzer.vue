@@ -1,36 +1,47 @@
 <template>
   <v-content>
-    <v-container class="analyzer">
-      <v-text-field v-model="text" outline label="Put your tweet" prepend-icon="fab fa-twitter"></v-text-field>
-    </v-container>
-    <v-container class="analyzer">
-      <v-layout>
-        <v-flex xs12 sm6 offset-sm3>
-          <v-card>
-            <v-card-title primary-title>
-              <div>
-                <h3 class="headline mb-0">{{ answer }}</h3>
-              </div>
-            </v-card-title>
-          </v-card>
-        </v-flex>
-      </v-layout>
-      <v-progress-circular
-        v-if="isLoading"
-        class="analyzer"
-        indeterminate
-        color="primary"
-        size="96"
-      ></v-progress-circular>
-    </v-container>
+    <v-flex xs12 sm6 offset-sm3>
+      <Introduction />
+      <v-container>
+        <v-text-field
+          v-model="text"
+          outline
+          label="Tweet"
+          placeholder="Plese type in your future tweet"
+          prepend-icon="fab fa-twitter"
+          height="100px"
+          @blur="disableLoading()"
+        ></v-text-field>
+      </v-container>
+      <v-container>
+        <v-card class="analyzer">
+          <v-card-title primary-title>
+            <div>
+              <h3 class="headline mb-0 text-xs-center">{{ answer }}</h3>
+            </div>
+          </v-card-title>
+        </v-card>
+        <!-- <v-progress-circular
+          v-if="isLoading"
+          class="analyzer"
+          indeterminate
+          color="primary"
+          size="96"
+        ></v-progress-circular>-->
+      </v-container>
+    </v-flex>
   </v-content>
 </template>
 
 <script>
 import { debounce } from "lodash";
+import Introduction from "./Introduction";
 
 export default {
   name: "Analyzer",
+  components: {
+    Introduction
+  },
   data() {
     return {
       text: "",
@@ -50,6 +61,7 @@ export default {
   methods: {
     async getSentiment() {
       if (this.text.length === 0) {
+        this.answer = "Nothing to analyze";
         return;
       }
       this.answer = "Getting sentiment...";
@@ -69,16 +81,24 @@ export default {
           vm.isLoading = false;
           vm.answer = "Error! " + error;
         });
+    },
+    enableLoading() {
+      this.isLoading = true;
+    },
+    disableLoading() {
+      this.isLoading = false;
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 .analyzer {
   position: relative;
   float: left;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  /* padding: 0px; */
 }
 </style>
