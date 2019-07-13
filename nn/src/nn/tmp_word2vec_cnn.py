@@ -1,12 +1,12 @@
-from nn.src.preprocessor import preprocess
-from nn.src.features_extractor import get_word2vec_features, update_labels
-from nn.src.data_util import get_data
-from nn.src.model import get_model_word2vec_cnn, plot_training_results
+from nn.src.util.preprocessor import preprocess
+from nn.src.util.features_extractor import get_word2vec_features, update_labels
+from nn.src.util.data_util import get_data
+from nn.src.util.model import get_model_word2vec_cnn, plot_training_results
 
 from sklearn.metrics import confusion_matrix
 
 """Data preparation"""
-data_path = "path_to_data"
+data_path = r"D:\DOCS\University of Passau\Text Mining\data\16kk\train_data.csv"
 
 train_size = 500
 batch_size = 50
