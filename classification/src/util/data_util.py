@@ -2,14 +2,15 @@ import pandas as pd
 from sklearn.utils import shuffle
 
 
-def get_data(path, train_size):
+def get_data(path, train_size, headers, skip_rows=0):
     test_size = train_size * 0.8
 
     data = pd.read_csv(path,
-                       names=["polarity", "id", "date", "query", "user", "text"],
+                       names=headers,
                        low_memory=False,
                        header=None,
-                       encoding="ISO-8859-1")
+                       encoding="ISO-8859-1",
+                       skiprows=skip_rows)
 
     data = shuffle(data, random_state=9016832).reset_index(drop=True)
 
