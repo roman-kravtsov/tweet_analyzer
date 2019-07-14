@@ -10,13 +10,14 @@ data_path = "path_to_data"
 data_headers = ["data", "headers", "here"]
 
 train_size = 2000
+test_size = 800
 batch_size = 100
 train_epochs = 10
 
-x_test, y_test, x_train, y_train = get_data(data_path, train_size, data_headers, skip_rows=1)
+x_test, y_test, x_train, y_train = get_data(data_path, train_size, test_size, data_headers, skip_rows=1)
 
 x_test, y_test = preprocess(x_test, y_test)
-x_train, y_train = preprocess(x_test, y_test)
+x_train, y_train = preprocess(x_train, y_train)
 
 features_train, features_test = get_word2vec_features(x_train, x_test)
 train_labels, test_labels = update_labels(y_train, y_test)
