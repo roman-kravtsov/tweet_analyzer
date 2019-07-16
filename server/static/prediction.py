@@ -3,9 +3,9 @@ import numpy as np
 from keras.models import model_from_json
 from gensim.models import Word2Vec
 
-from server.static.preprocess import clean_tweet
+from static.preprocess import clean_tweet
 
-root_path = "./server/models/"
+root_path = "./models/"
 
 
 def load_nn_model():

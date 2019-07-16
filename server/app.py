@@ -1,10 +1,12 @@
 from flask import Flask
 from flask import request, jsonify, make_response
+from flask_cors import CORS
 
-from server.static.prediction import get_prediction_for_tweet
+from static.prediction import get_prediction_for_tweet
 import tensorflow as tf
 
 app = Flask(__name__)
+CORS(app)
 graph = tf.get_default_graph()
 
 
