@@ -1,8 +1,8 @@
 <template>
-  <v-footer class="teal lighten-3" height="5%">
+  <v-footer height="5%" :app="true">
     <v-layout align-center justify-center row fill-height>
       <v-btn href="https://github.com/Chewbaccamaster/tweet_analyzer" class="mb-2" light icon>
-        <v-icon size="36px">{{ "fab fa-github" }}</v-icon>
+        <v-icon size="24px">{{ "fab fa-github" }}</v-icon>
       </v-btn>
     </v-layout>
   </v-footer>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "Footer",
+  name: 'Footer',
   data: () => ({})
-};
+}
 </script>

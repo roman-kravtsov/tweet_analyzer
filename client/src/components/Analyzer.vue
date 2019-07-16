@@ -3,31 +3,22 @@
     <v-flex xs12 sm6 offset-sm3>
       <Introduction />
       <v-container>
-        <v-text-field
+        <v-textarea
           v-model="text"
           outline
           label="Tweet"
           placeholder="Plese type in your future tweet"
-          prepend-icon="fab fa-twitter"
-          height="100px"
+          append-icon="fab fa-twitter"
           @blur="disableLoading()"
-        ></v-text-field>
+        ></v-textarea>
       </v-container>
-      <v-container>
-        <v-card class="analyzer">
-          <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-0 text-xs-center">{{ answer }}</h3>
-            </div>
-          </v-card-title>
-        </v-card>
-        <!-- <v-progress-circular
-          v-if="isLoading"
-          class="analyzer"
-          indeterminate
-          color="primary"
-          size="96"
-        ></v-progress-circular>-->
+      <v-container v-if="isLoading">
+        <v-progress-circular class="centered" indeterminate color="primary" size="72"></v-progress-circular>
+      </v-container>
+      <v-container v-if="!isLoading" class="centered">
+        <div>
+          <h3 class="headline mb-0 text-xs-center">{{ answer }}</h3>
+        </div>
       </v-container>
     </v-flex>
   </v-content>
@@ -56,7 +47,7 @@ export default {
     }
   },
   created() {
-    this.debouncedGetSentiment = debounce(this.getSentiment, 1000);
+    this.debouncedGetSentiment = debounce(this.getSentiment, 450);
   },
   methods: {
     async getSentiment() {
@@ -64,10 +55,10 @@ export default {
         this.answer = "Nothing to analyze";
         return;
       }
-      this.answer = "Getting sentiment...";
       this.isLoading = true;
+      await new Promise(resolve => setTimeout(resolve, 500));
       const vm = this;
-      const a = await fetch("http://127.0.0.1:5000/predict", {
+      fetch("http://127.0.0.1:5000/predict", {
         method: "post",
         headers: {
           Accept: "application/json",
@@ -76,14 +67,14 @@ export default {
         body: JSON.stringify({ tweet: vm.text })
       })
         .then(response => response.json())
-        .then(response => ((vm.isLoading = false), (vm.answer = response)))
+        .then(response => {
+          vm.isLoading = false;
+          vm.answer = response;
+        })
         .catch(function(error) {
           vm.isLoading = false;
-          vm.answer = "Error! " + error;
+          vm.answer = `Error! ${error}`;
         });
-    },
-    enableLoading() {
-      this.isLoading = true;
     },
     disableLoading() {
       this.isLoading = false;
@@ -93,12 +84,11 @@ export default {
 </script>
 
 <style scoped>
-.analyzer {
+.centered {
   position: relative;
   float: left;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* padding: 0px; */
 }
 </style>
