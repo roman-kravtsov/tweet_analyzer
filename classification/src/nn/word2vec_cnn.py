@@ -1,18 +1,22 @@
+from classification.src.util.plot import plot_training_results
 from classification.src.util.preprocessor import preprocess
 from classification.src.util.features_extractor import get_word2vec_features, update_labels
 from classification.src.util.data_util import get_data
-from classification.src.util.model import get_model_word2vec_cnn, plot_training_results
+from classification.src.util.model import get_model_word2vec_cnn
 
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, classification_report
 
 """Data preparation"""
-data_path = "path_to_data"
-data_headers = ["data", "headers", "here"]
+data_path = r"D:\DOCS\University of Passau\Text Mining\data\16kk\train_data.csv"
+data_headers = ["polarity", "id", "date", "query", "user", "text"]
 
-train_size = 2000
-test_size = 800
-batch_size = 100
-train_epochs = 10
+# data_path = r"D:\DOCS\University of Passau\Text Mining\data\semeval\semeval_data.csv"
+# data_headers = ["id", "polarity", "text"]
+
+train_size = 20000
+test_size = train_size*0.2
+batch_size = 200
+train_epochs = 30
 
 x_test, y_test, x_train, y_train = get_data(data_path, train_size, test_size, data_headers, skip_rows=1)
 
@@ -37,6 +41,7 @@ y_pred = model.predict_classes(features_test)
 matrix = confusion_matrix(test_labels, y_pred, labels=[0, 1])
 
 print(matrix)
+print(classification_report(test_labels, y_pred))
 
 # Print incorrectly classified
 # for i in range(len(x_test["text"])):
