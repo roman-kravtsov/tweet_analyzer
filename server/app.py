@@ -23,10 +23,13 @@ def predict():
     # required to correctly handle tensorflow session
     global graph
     with graph.as_default():
-        prediction = get_prediction_for_tweet(tweet)
+        predictions = get_prediction_for_tweet(tweet)
 
     response_body = {
-        "prediction": str(prediction),
+        "w2v_cnn": str(predictions["w2v_cnn"]),
+        "emb_cnn_lstm": str(predictions["emb_cnn_lstm"]),
+        "tfidf_nb": str(predictions["tfidf_nb"]),
+        "tfidf_svc": str(predictions["tfidf_svc"]),
     }
 
     return make_response(jsonify(response_body), 200)
