@@ -3,6 +3,7 @@ from flask import request, jsonify, make_response
 from flask_cors import CORS
 
 from static.prediction import get_prediction_for_tweet
+
 import tensorflow as tf
 
 app = Flask(__name__)
@@ -13,6 +14,7 @@ graph = tf.get_default_graph()
 @app.route('/')
 def index():
     return "Hello, World!"
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
