@@ -1,8 +1,8 @@
-from classification.src.util.plot import plot_training_results
-from classification.src.util.preprocessor import preprocess
-from classification.src.util.features_extractor import get_word2vec_features, update_labels
-from classification.src.util.data_util import get_data
-from classification.src.util.model import get_model_word2vec_cnn
+from classification.util.plot import plot_training_results
+from classification.util.preprocessor import preprocess
+from classification.util.features_extractor import get_word2vec_features, update_labels
+from classification.util.data_util import get_data
+from classification.util.model import get_model_word2vec_cnn
 
 from sklearn.metrics import confusion_matrix, classification_report
 

@@ -4,11 +4,11 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn import metrics
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from classification.src.util.data_util import get_data
-from classification.src.util.features_extractor import update_labels
-from classification.src.util.plot import plot_confusion_matrix
-from classification.src.util.preprocessor import preprocess
-from classification.src.util.save_util import save_classifier
+from classification.util.data_util import get_data
+from classification.util.features_extractor import update_labels
+from classification.util.plot import plot_confusion_matrix
+from classification.util.preprocessor import preprocess
+from classification.util.save_util import save_classifier
 
 save_path_prefix = "models_clf/"
 

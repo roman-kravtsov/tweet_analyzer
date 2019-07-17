@@ -5,9 +5,9 @@ from sklearn.svm import SVC
 from sklearn import metrics
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from classification.src.util.features_extractor import update_labels
-from classification.src.util.data_util import get_data
-from classification.src.util.plot import plot_confusion_matrix
+from classification.util.features_extractor import update_labels
+from classification.util.data_util import get_data
+from classification.util.plot import plot_confusion_matrix
 
 save_path_prefix = "models_clf/"
 
