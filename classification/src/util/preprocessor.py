@@ -22,6 +22,8 @@ negations_dic = {
 }
 
 stop_words = stopwords.words('english')
+stop_words.append('im')
+stop_words.append('u')
 
 important_stop_words = list(negations_dic.keys())
 
@@ -29,6 +31,7 @@ for word in list(negations_dic.values()):
     important_stop_words.extend(list(word.split(" ")))
 
 important_stop_words.append("not")
+important_stop_words.append("no")
 
 
 def filter_stop_words(stop_words, to_remove):
@@ -41,9 +44,6 @@ def filter_stop_words(stop_words, to_remove):
 
 
 stop_words = filter_stop_words(stop_words, important_stop_words)
-
-nltk.download('stopwords')
-stop_words = stopwords.words('english')
 
 
 def clean_data(tweets, inplace=False):
@@ -72,7 +72,7 @@ def clean_data(tweets, inplace=False):
     # Duplicates dropping
     data['text'] = data['text'].apply(lambda text: " ".join([re.sub(r'(.)\1+', r'\1\1', text)]))
 
-    #  Transform negations into following form: wouldnt -> would not
+    # Transform negations into following form: wouldnt -> would not
     neg_pattern = re.compile(r'\b(' + '|'.join(negations_dic.keys()) + r')\b')
     data['text'] = data['text'].apply(lambda text: neg_pattern.sub(lambda x: negations_dic[x.group()], text))
 
@@ -85,12 +85,25 @@ def clean_data(tweets, inplace=False):
     # Remove extra whitespaces
     data['text'] = data['text'].apply(lambda text: ' '.join(text.split()))
 
+    return data
+
+
+def stem(tweets, inplace=False):
+    data = tweets.copy(deep=True) if not inplace else tweets
+
     # Stemming
     stemmer = PorterStemmer()
     data['text'] = data['text'].apply(lambda text: " ".join([stemmer.stem(word) for word in text.split()]))
 
+    return data
+
+
+def lem(tweets, inplace=False):
+    data = tweets.copy(deep=True) if not inplace else tweets
+
     # Lemmatization
     lemmatizer = WordNetLemmatizer()
+
     data['text'] = data['text'].apply(lambda text: " ".join([lemmatizer.lemmatize(word) for word in text.split()]))
 
     return data
@@ -111,5 +124,7 @@ def drop_empty(x, y):
 def preprocess(x, y):
     x = clean_data(x)
     drop_empty(x, y)
+    x = lem(x)
+    x = stem(x)
 
     return x, y
