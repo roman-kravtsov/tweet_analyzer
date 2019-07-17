@@ -22,28 +22,11 @@ negations_dic = {
 }
 
 stop_words = stopwords.words('english')
+
 stop_words.append('im')
 stop_words.append('u')
-
-important_stop_words = list(negations_dic.keys())
-
-for word in list(negations_dic.values()):
-    important_stop_words.extend(list(word.split(" ")))
-
-important_stop_words.append("not")
-important_stop_words.append("no")
-
-
-def filter_stop_words(stop_words, to_remove):
-    correct_stop_words = list()
-    for i in range(len(stop_words)):
-        if not (stop_words[i] in to_remove):
-            correct_stop_words.append(stop_words[i])
-
-    return correct_stop_words
-
-
-stop_words = filter_stop_words(stop_words, important_stop_words)
+stop_words.remove('not')
+stop_words.remove('no')
 
 
 def clean_tweet(tweet):
