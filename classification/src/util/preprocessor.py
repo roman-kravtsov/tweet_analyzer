@@ -47,7 +47,7 @@ stop_words = filter_stop_words(stop_words, important_stop_words)
 
 
 def clean_data(tweets, inplace=False):
-    data = tweets.copy(deep=True) if inplace == False else tweets
+    data = tweets.copy(deep=True) if not inplace else tweets
 
     # Remove links
     data['text'] = data['text'].apply(lambda text: re.sub('ht.?.?.?tps?://[A-Za-z0-9./]+', " ", text))
@@ -69,6 +69,7 @@ def clean_data(tweets, inplace=False):
 
     # Remove amp
     data['text'] = data['text'].apply(lambda text: re.compile(r'\bamp\b').sub("", text))
+
     # Duplicates dropping
     data['text'] = data['text'].apply(lambda text: " ".join([re.sub(r'(.)\1+', r'\1\1', text)]))
 
@@ -103,7 +104,6 @@ def lem(tweets, inplace=False):
 
     # Lemmatization
     lemmatizer = WordNetLemmatizer()
-
     data['text'] = data['text'].apply(lambda text: " ".join([lemmatizer.lemmatize(word) for word in text.split()]))
 
     return data

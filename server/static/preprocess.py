@@ -18,10 +18,12 @@ negations_dic = {
     "wouldnt": "would not", "dont": "do not", "doesnt": "does not", "didnt": "did not",
     "cant": "can not", "couldnt": "could not", "shouldnt": "should not", "mightnt": "might not",
     "mustnt": "must not", "mightn": "might not", "mustn": "must not", "needn": "need not",
-    "needn't": "need not", "shan": "shall not", "shan't": "shall not", "shant": "shall not",
+    "needn't": "need not", "shan": "shall not", "shan't": "shall not", "shant": "shall not"
 }
 
 stop_words = stopwords.words('english')
+stop_words.append('im')
+stop_words.append('u')
 
 important_stop_words = list(negations_dic.keys())
 
@@ -29,6 +31,7 @@ for word in list(negations_dic.values()):
     important_stop_words.extend(list(word.split(" ")))
 
 important_stop_words.append("not")
+important_stop_words.append("no")
 
 
 def filter_stop_words(stop_words, to_remove):
@@ -64,6 +67,7 @@ def clean_tweet(tweet):
 
     # Remove amp
     tweet = re.compile(r'\bamp\b').sub("", tweet)
+
     # Duplicates dropping
     tweet = " ".join([re.sub(r'(.)\1+', r'\1\1', tweet)])
 
@@ -80,13 +84,13 @@ def clean_tweet(tweet):
     # Remove extra whitespaces
     tweet = ' '.join(tweet.split())
 
-    # Stemming
-    stemmer = PorterStemmer()
-    tweet = " ".join([stemmer.stem(word) for word in tweet.split()])
-
     # Lemmatization
     lemmatizer = WordNetLemmatizer()
     tweet = " ".join([lemmatizer.lemmatize(word) for word in tweet.split()])
+
+    # Stemming
+    stemmer = PorterStemmer()
+    tweet = " ".join([stemmer.stem(word) for word in tweet.split()])
 
     if len(tweet) == 0:
         raise ValueError("Tweet empty after preprocessing, try another one")
