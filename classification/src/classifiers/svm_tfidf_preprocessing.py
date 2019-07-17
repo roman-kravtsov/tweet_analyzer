@@ -1,5 +1,4 @@
 import pandas as pd
-import pickle
 
 from sklearn.svm import SVC
 from sklearn import metrics
@@ -9,6 +8,7 @@ from classification.src.util.data_util import get_data
 from classification.src.util.features_extractor import update_labels
 from classification.src.util.plot import plot_confusion_matrix
 from classification.src.util.preprocessor import preprocess
+from classification.src.util.save_util import save_classifier
 
 save_path_prefix = "models_clf/"
 
@@ -44,5 +44,7 @@ plot_confusion_matrix(test_labels, predicted, [0, 1], ["Negative", "Positive"],
                       save_path_prefix + "svc_prep_cf_10k_2k",
                       normalize=True)
 
-filename = save_path_prefix + "svc_prep_data_10k_train_2k_test.clf"
-pickle.dump(clf, open(filename, 'wb'))
+filename_clf = save_path_prefix + "svc_prep_data_10k_train_2k_test.clf"
+filename_vect = save_path_prefix + "svc_prep_data_10k_train_2k_test.vect"
+
+save_classifier(clf, vectorizer, filename_clf, filename_vect)
