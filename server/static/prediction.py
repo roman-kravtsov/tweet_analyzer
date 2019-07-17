@@ -78,10 +78,8 @@ def get_prediction_for_tweet(tweet):
     tweet_features_tfidf_nb = get_features_tfidf(tfidf_nb, [tweet])
     tweet_features_tfidf_svc = get_features_tfidf(tfidf_svc, [tweet])
 
-    prediction = cnn_model.predict_classes(tweet_features_w2v)
-
     predictions = {
-        "w2v_cnn": prediction.flatten()[0],
+        "w2v_cnn": cnn_model.predict_classes(tweet_features_w2v).flatten()[0],
         "emb_cnn_lstm": "Not implemented",
         "tfidf_nb": nb_clf.predict(tweet_features_tfidf_nb)[0],
         "tfidf_svc": svc_clf.predict(tweet_features_tfidf_svc)[0]
