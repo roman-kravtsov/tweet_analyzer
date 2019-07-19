@@ -2,7 +2,7 @@
   <v-container class="tweet">
     <v-icon medium left>fab fa-twitter-square</v-icon>
     <div class="josefin">
-      Welcome to
+      Welcome to the
       <strong>Tweet Analyzer</strong>. This fancy
       application will analyze the sentiment of your tweet. Please type
       in your future tweet below.
