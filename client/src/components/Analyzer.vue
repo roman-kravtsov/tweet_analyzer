@@ -15,11 +15,7 @@
       <v-container v-if="isLoading">
         <v-progress-circular class="centered" indeterminate color="primary" size="72"></v-progress-circular>
       </v-container>
-      <v-container v-if="!isLoading" class="centered">
-        <div>
-          <h3 class="headline mb-0 text-xs-center">{{ answer }}</h3>
-        </div>
-      </v-container>
+      <Sentiment v-if="!isLoading" :answer="answer" />
     </v-flex>
   </v-content>
 </template>
@@ -27,11 +23,13 @@
 <script>
 import { debounce } from "lodash";
 import Introduction from "./Introduction";
+import Sentiment from "./Sentiment";
 
 export default {
   name: "Analyzer",
   components: {
-    Introduction
+    Introduction,
+    Sentiment
   },
   data() {
     return {

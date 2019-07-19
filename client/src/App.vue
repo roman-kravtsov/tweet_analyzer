@@ -7,7 +7,7 @@
         </v-toolbar-title>
       </v-layout>
     </v-toolbar>
-    <!-- <v-spacer></v-spacer> -->
+    <v-spacer></v-spacer>
     <Analyzer />
     <Footer />
   </v-app>
