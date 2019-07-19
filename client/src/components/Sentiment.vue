@@ -1,7 +1,14 @@
 <template>
   <v-container v-if="!expandedMode">
     <p class="headline mb-0 text-xs-center">{{sentiment}}</p>
-    <v-btn large depressed color="info" class="centered" @click="expand">Show every sentiment</v-btn>
+    <v-btn
+      v-if="typeof(this.answer) == 'object'"
+      large
+      depressed
+      color="info"
+      class="centered"
+      @click="expand"
+    >Show every sentiment</v-btn>
   </v-container>
   <v-container v-else>
     <p
@@ -37,7 +44,9 @@ export default {
           final_sentiment[sentiment] += 1;
         }
         final_sentiment =
-          final_sentiment[0] > final_sentiment[1] ? "Tweet is Negative😟" : "Tweet is Positive😊";
+          final_sentiment[0] > final_sentiment[1]
+            ? "Tweet is Negative😟"
+            : "Tweet is Positive😊";
       } else {
         final_sentiment = this.answer;
       }
