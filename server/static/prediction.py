@@ -19,19 +19,20 @@ svc_base_file_name = "svc_prep_data_10k_train_2k_test"
 
 
 def load_word2vec_and_nn_model():
+    """Loads CNN model and weights, loads Word2Vec model"""
+
     word2vec_model = Word2Vec.load(cnn_path + w2vec_model_file)
 
-    # load json and create model
     with open(cnn_path + model_file, 'r') as model_reader:
         loaded_model = model_from_json(model_reader.read())
-
-    # load weights into new model
     loaded_model.load_weights(cnn_path + model_weights_file)
 
     return word2vec_model, loaded_model
 
 
 def load_tfidf_and_clf_model(path, name):
+    """Loads TF-IDF and classifier model"""
+
     with open("{}{}{}".format(path, name, ".vect"), 'rb') as f:
         tfidf_vect = pickle.load(f)
 
@@ -42,6 +43,8 @@ def load_tfidf_and_clf_model(path, name):
 
 
 def get_features_w2v(word2vec_model, tweet_words, max_tweet_len):
+    """Creates features from tweet based on Word2Vec model"""
+
     w2v_vector_size = word2vec_model.vector_size
 
     # cut tweet if it is longer than the longest tweet
@@ -62,6 +65,9 @@ def get_features_w2v(word2vec_model, tweet_words, max_tweet_len):
 
 
 def get_features_tfidf(tfidf_vect, tweet):
+    """
+    Creates tweet features based on TF-IDF model
+    """
     return tfidf_vect.transform(tweet).todense()
 
 
@@ -71,6 +77,8 @@ tfidf_svc, svc_clf = load_tfidf_and_clf_model(svc_path, svc_base_file_name)
 
 
 def get_prediction_for_tweet(tweet):
+    """Creates predictions for a tweet using available models"""
+
     tweet = clean_tweet(tweet)
     tweet_words = tweet.split(" ")
 

@@ -3,6 +3,8 @@ from sklearn.utils import shuffle
 
 
 def get_data(path, train_size, test_size, headers, skip_rows=0):
+    """ Loads data from the specified path with given training and test split sizes"""
+
     data = pd.read_csv(path,
                        names=headers,
                        low_memory=False,

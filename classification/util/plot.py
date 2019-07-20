@@ -1,13 +1,14 @@
 import itertools
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd  
+import pandas as pd
 
 from wordcloud import WordCloud
 from sklearn.metrics import confusion_matrix
 
 
 def plot_training_results(history):
+    """Plots training process curves over epochs based on training history"""
     plt.plot(history.history['acc'])
     plt.plot(history.history['val_acc'])
     plt.title('Model accuracy')
@@ -33,6 +34,7 @@ def plot_confusion_matrix(y_test,
                           normalize=False,
                           cmap=plt.cm.YlOrRd):
     """Plots and saves confusion matrix"""
+
     plt.figure()
     plt.autoscale(False)
     plt.gca().invert_yaxis()
@@ -70,31 +72,41 @@ def plot_confusion_matrix(y_test,
     plt.show()
     plt.close()
 
-def plot_word_cloud(tweets, polarity = 0):
-  word_string = pd.Series(tweets[tweets['polarity'] == polarity].text.values).str.cat(sep=' ')
-  wordcloud = WordCloud(width=1600, height=800,max_font_size=200).generate(word_string)
-  plt.figure(figsize=(12,10))
-  plt.imshow(wordcloud, interpolation="bilinear")
-  plt.axis("off")
-  plt.show()  
+
+def plot_word_cloud(tweets, polarity=0):
+    """Plots Word Cloud"""
+
+    word_string = pd.Series(tweets[tweets['polarity'] == polarity].text.values).str.cat(sep=' ')
+    wordcloud = WordCloud(width=1600, height=800, max_font_size=200).generate(word_string)
+
+    plt.figure(figsize=(12, 10))
+    plt.imshow(wordcloud, interpolation="bilinear")
+    plt.axis("off")
+    plt.show()
+
 
 def count_word_freq(tweets):
-  freq_list = {}
-  
-  for tweet in tweets:
-    for word in tweet.split():
-      if word in freq_list:
-        freq_list[word] = freq_list[word] + 1
-      else:
-        freq_list[word] = 1
-  
-  word_freq = pd.Series(freq_list)
-  
-  return word_freq.sort_values(ascending = False)
+    """Counts word frequency for tweets"""
 
-def plot_n_freq_words(tweets, top_number = 20):
+    freq_list = {}
+
+    for tweet in tweets:
+        for word in tweet.split():
+            if word in freq_list:
+                freq_list[word] = freq_list[word] + 1
+            else:
+                freq_list[word] = 1
+
+    word_freq = pd.Series(freq_list)
+
+    return word_freq.sort_values(ascending=False)
+
+
+def plot_n_freq_words(tweets, top_number=20):
+    """Plots n most frequent words"""
+
     word_freq = count_word_freq(tweets.text.values)
     top_words = word_freq.head(top_number)
     top_value = word_freq.head(20)[:1][0]
     bottom_value = word_freq.head(20)[-1:][0]
-    top_words.plot.bar(figsize=(15,10), xlim= (bottom_value, top_value))
+    top_words.plot.bar(figsize=(15, 10), xlim=(bottom_value, top_value))

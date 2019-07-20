@@ -4,6 +4,8 @@ from gensim.models import Word2Vec
 
 
 def _get_word2vec_features(x, word2vec, all_words_per_tweet, max_tweet_len):
+    """Computes features for a single tweet"""
+
     features = np.zeros((len(x), max_tweet_len, word2vec.vector_size))
 
     for i, tweet_words in enumerate(all_words_per_tweet):
@@ -15,6 +17,8 @@ def _get_word2vec_features(x, word2vec, all_words_per_tweet, max_tweet_len):
 
 
 def get_word2vec_features(x_train, x_test):
+    """Prepares Word2Vec features for train and test data"""
+
     all_words_per_tweet_train = [nltk.word_tokenize(sent) for sent in x_train["text"]]
     all_words_per_tweet_test = [nltk.word_tokenize(sent) for sent in x_test["text"]]
 
@@ -31,6 +35,8 @@ def get_word2vec_features(x_train, x_test):
 
 
 def update_labels(y_train, y_test):
+    """Updates labels in case they are not 0s and 1s"""
+
     train_labels_updated = []
     test_labels_updated = []
 

@@ -38,6 +38,8 @@ plot_training_results(history)
 
 # Confusion matrix
 y_pred = model.predict_classes(features_test)
+
+"""Metrics"""
 matrix = confusion_matrix(test_labels, y_pred, labels=[0, 1])
 
 print(matrix)

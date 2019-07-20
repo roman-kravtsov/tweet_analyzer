@@ -32,6 +32,7 @@ features_test = pd.DataFrame(vectorizer.transform(x_test["text"]).todense(), col
 clf = SVC(kernel='linear').fit(features_train.values, train_labels)
 predicted = clf.predict(features_test.values)
 
+"""Metrics"""
 print(metrics.classification_report(test_labels, predicted, target_names=["negative", "positive"]))
 print(metrics.confusion_matrix(test_labels, predicted))
 

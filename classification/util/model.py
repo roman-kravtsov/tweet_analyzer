@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 
 
 def get_model_word2vec_cnn(input_shape):
+    """Returns a CNN model with given input_shape"""
+
     model = Sequential()
 
     model.add(Conv1D(64, kernel_size=1, activation='relu', input_shape=input_shape, padding='same'))
