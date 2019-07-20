@@ -73,9 +73,9 @@ def clean_data(tweets, inplace=False):
 
 
 def stem(tweets, inplace=False):
+    """Performs stemming"""
     data = tweets.copy(deep=True) if not inplace else tweets
 
-    # Stemming
     stemmer = PorterStemmer()
     data['text'] = data['text'].apply(lambda text: " ".join([stemmer.stem(word) for word in text.split()]))
 
@@ -83,17 +83,17 @@ def stem(tweets, inplace=False):
 
 
 def lem(tweets, inplace=False):
+    """Performs lemmatization"""
     data = tweets.copy(deep=True) if not inplace else tweets
 
-    # Lemmatization
     lemmatizer = WordNetLemmatizer()
     data['text'] = data['text'].apply(lambda text: " ".join([lemmatizer.lemmatize(word) for word in text.split()]))
 
     return data
 
 
-# remove empty tweets
 def drop_empty(x, y):
+    """Removes tweets which may have become empty after preprocessing"""
     to_drop = []
 
     for i, t in enumerate(x["text"]):
@@ -105,6 +105,7 @@ def drop_empty(x, y):
 
 
 def preprocess(x, y):
+    """Covers the whole preprocessing cycle"""
     x = clean_data(x)
     drop_empty(x, y)
     x = lem(x)
