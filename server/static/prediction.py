@@ -84,6 +84,8 @@ def get_features_w2v(word2vec_model, tweet_words, max_tweet_len):
 
 
 def get_features_tokenizer(tokenizer, tweet):
+    """Creates features based on tokenizer model"""
+    
     feature = tokenizer.texts_to_sequences([tweet])
     feature = pad_sequences(feature, maxlen=96)
 
