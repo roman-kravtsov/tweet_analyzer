@@ -2,14 +2,20 @@ import numpy as np
 import pickle
 
 from keras.models import model_from_json
+from keras.preprocessing.sequence import pad_sequences
 from gensim.models import Word2Vec
 
 from static.preprocess import clean_tweet
 
 cnn_path = "./models/w2v_cnn/"
-model_file = "w2v_cnn_model.json"
-model_weights_file = "w2v_cnn_weights.h5"
+cnn_model_file = "w2v_cnn_model.json"
+cnn_model_weights_file = "w2v_cnn_weights.h5"
 w2vec_model_file = "word2vec.model"
+
+lstm_path = "./models/lstm/"
+lstm_model_file = "lstm.json"
+lstm_model_weights_file = "lstm.h5"
+lstm_tokenizer_model_file = "tokenizer.model"
 
 nb_path = "./models/tfidf_nb/"
 nb_base_file_name = "nb_prep_data_50k_train_10k_test"
@@ -18,16 +24,29 @@ svc_path = "./models/tfidf_svc/"
 svc_base_file_name = "svc_prep_data_10k_train_2k_test"
 
 
-def load_word2vec_and_nn_model():
+def load_word2vec_and_cnn_model():
     """Loads CNN model and weights, loads Word2Vec model"""
 
     word2vec_model = Word2Vec.load(cnn_path + w2vec_model_file)
 
-    with open(cnn_path + model_file, 'r') as model_reader:
+    with open(cnn_path + cnn_model_file, 'r') as model_reader:
         loaded_model = model_from_json(model_reader.read())
-    loaded_model.load_weights(cnn_path + model_weights_file)
+    loaded_model.load_weights(cnn_path + cnn_model_weights_file)
 
     return word2vec_model, loaded_model
+
+
+def load_vectorizer_and_lstm_model():
+    """Loads CNN model and weights, loads Word2Vec model"""
+
+    with open(lstm_path + lstm_tokenizer_model_file, 'rb') as reader:
+        tokenizer = pickle.load(reader)
+
+    with open(lstm_path + lstm_model_file, 'r') as model_reader:
+        loaded_model = model_from_json(model_reader.read())
+    loaded_model.load_weights(lstm_path + lstm_model_weights_file)
+
+    return tokenizer, loaded_model
 
 
 def load_tfidf_and_clf_model(path, name):
@@ -64,6 +83,13 @@ def get_features_w2v(word2vec_model, tweet_words, max_tweet_len):
     return features
 
 
+def get_features_tokenizer(tokenizer, tweet):
+    feature = tokenizer.texts_to_sequences([tweet])
+    feature = pad_sequences(feature, maxlen=96)
+
+    return feature
+
+
 def get_features_tfidf(tfidf_vect, tweet):
     """
     Creates tweet features based on TF-IDF model
@@ -71,7 +97,8 @@ def get_features_tfidf(tfidf_vect, tweet):
     return tfidf_vect.transform(tweet).todense()
 
 
-w2vec, cnn_model = load_word2vec_and_nn_model()
+w2vec, cnn_model = load_word2vec_and_cnn_model()
+tokenizer, lstm_model = load_vectorizer_and_lstm_model()
 tfidf_nb, nb_clf = load_tfidf_and_clf_model(nb_path, nb_base_file_name)
 tfidf_svc, svc_clf = load_tfidf_and_clf_model(svc_path, svc_base_file_name)
 
@@ -83,12 +110,13 @@ def get_prediction_for_tweet(tweet):
     tweet_words = tweet.split(" ")
 
     tweet_features_w2v = np.array([get_features_w2v(w2vec, tweet_words, cnn_model.get_input_shape_at(0)[1])])
+    tweet_features_tokenizer = get_features_tokenizer(tokenizer, tweet)
     tweet_features_tfidf_nb = get_features_tfidf(tfidf_nb, [tweet])
     tweet_features_tfidf_svc = get_features_tfidf(tfidf_svc, [tweet])
 
     predictions = {
         "w2v_cnn": cnn_model.predict_classes(tweet_features_w2v).flatten()[0],
-        "emb_cnn_lstm": "Not implemented",
+        "emb_cnn_lstm": lstm_model.predict_classes(tweet_features_tokenizer).flatten()[0],
         "tfidf_nb": nb_clf.predict(tweet_features_tfidf_nb)[0],
         "tfidf_svc": svc_clf.predict(tweet_features_tfidf_svc)[0]
     }
