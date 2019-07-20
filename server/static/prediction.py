@@ -80,12 +80,12 @@ def get_features_w2v(word2vec_model, tweet_words, max_tweet_len):
 
     features[:len(tweet_repr), :w2v_vector_size] = tweet_repr
 
-    return features
+    return np.array([features])
 
 
 def get_features_tokenizer(tokenizer, tweet):
     """Creates features based on tokenizer model"""
-    
+
     feature = tokenizer.texts_to_sequences([tweet])
     feature = pad_sequences(feature, maxlen=96)
 
@@ -93,9 +93,8 @@ def get_features_tokenizer(tokenizer, tweet):
 
 
 def get_features_tfidf(tfidf_vect, tweet):
-    """
-    Creates tweet features based on TF-IDF model
-    """
+    """Creates tweet features based on TF-IDF model"""
+
     return tfidf_vect.transform(tweet).todense()
 
 
@@ -111,7 +110,7 @@ def get_prediction_for_tweet(tweet):
     tweet = clean_tweet(tweet)
     tweet_words = tweet.split(" ")
 
-    tweet_features_w2v = np.array([get_features_w2v(w2vec, tweet_words, cnn_model.get_input_shape_at(0)[1])])
+    tweet_features_w2v = get_features_w2v(w2vec, tweet_words, cnn_model.get_input_shape_at(0)[1])
     tweet_features_tokenizer = get_features_tokenizer(tokenizer, tweet)
     tweet_features_tfidf_nb = get_features_tfidf(tfidf_nb, [tweet])
     tweet_features_tfidf_svc = get_features_tfidf(tfidf_svc, [tweet])
