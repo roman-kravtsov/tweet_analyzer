@@ -13,7 +13,8 @@ from util.plot import plot_training_results, plot_confusion_matrix
 from util.data_util import get_data
 from util.model import save_model
 
-data_path = r"D:\DOCS\University of Passau\Text Mining\data\16kk\train_data.csv"
+"""Data preparation"""
+data_path = "./data/train_data.csv"
 data_headers = ["polarity", "id", "date", "query", "user", "text"]
 
 train_size = 100000
