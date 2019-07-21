@@ -30,6 +30,10 @@ stop_words.remove('no')
 
 
 def clean_tweet(tweet):
+    """
+    Preprocessing for a single tweet
+    """
+
     # Remove links
     tweet = re.sub('ht.?.?.?tps?://[A-Za-z0-9./]+', " ", tweet)
 

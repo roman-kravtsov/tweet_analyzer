@@ -5,9 +5,9 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn import metrics
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from classification.util.data_util import get_data
-from classification.util.features_extractor import update_labels
-from classification.util.plot import plot_confusion_matrix
+from util.data_util import get_data
+from util.features_extractor import update_labels
+from util.plot import plot_confusion_matrix
 
 save_path_prefix = "models_clf/"
 
@@ -32,6 +32,7 @@ features_test = pd.DataFrame(vectorizer.transform(x_test["text"]).todense(), col
 clf = MultinomialNB().fit(features_train.values, train_labels)
 predicted = clf.predict(features_test.values)
 
+"""Metrics"""
 print(metrics.classification_report(test_labels, predicted, target_names=["negative", "positive"]))
 print(metrics.confusion_matrix(test_labels, predicted))
 
