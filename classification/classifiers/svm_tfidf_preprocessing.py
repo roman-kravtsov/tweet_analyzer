@@ -10,10 +10,10 @@ from util.plot import plot_confusion_matrix
 from util.preprocessor import preprocess
 from util.save_util import save_classifier
 
-save_path_prefix = "models_clf/"
+save_path_prefix = "./resources/"
 
 """Data preparation"""
-data_path = r"D:\DOCS\University of Passau\Text Mining\data\16kk\train_data.csv"
+data_path = "./data/train_data.csv"
 data_headers = ["polarity", "id", "date", "query", "user", "text"]
 
 train_size = 10000

@@ -9,10 +9,10 @@ from util.data_util import get_data
 from util.features_extractor import update_labels
 from util.plot import plot_confusion_matrix
 
-save_path_prefix = "models_clf/"
+save_path_prefix = "./resources/"
 
 """Data preparation"""
-data_path = r"D:\DOCS\University of Passau\Text Mining\data\16kk\train_data.csv"
+data_path = "./data/train_data.csv"
 data_headers = ["polarity", "id", "date", "query", "user", "text"]
 
 train_size = 50000

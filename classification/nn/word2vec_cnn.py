@@ -7,14 +7,11 @@ from util.model import get_model_word2vec_cnn
 from sklearn.metrics import confusion_matrix, classification_report
 
 """Data preparation"""
-data_path = r"D:\DOCS\University of Passau\Text Mining\data\16kk\train_data.csv"
+data_path = "./data/train_data.csv"
 data_headers = ["polarity", "id", "date", "query", "user", "text"]
 
-# data_path = r"D:\DOCS\University of Passau\Text Mining\data\semeval\semeval_data.csv"
-# data_headers = ["id", "polarity", "text"]
-
 train_size = 20000
-test_size = train_size*0.2
+test_size = train_size * 0.2
 batch_size = 200
 train_epochs = 30
 

@@ -13,7 +13,8 @@ from util.plot import plot_training_results, plot_confusion_matrix
 from util.data_util import get_data
 from util.model import save_model
 
-data_path = r"D:\DOCS\University of Passau\Text Mining\data\16kk\train_data.csv"
+"""Data preparation"""
+data_path = "./data/train_data.csv"
 data_headers = ["polarity", "id", "date", "query", "user", "text"]
 
 train_size = 100000
@@ -21,13 +22,8 @@ test_size = train_size * 0.2
 batch_size = 200
 train_epochs = 30
 
-data = pd.read_csv(data_path,
-                   names=data_headers,
-                   low_memory=False,
-                   header=None,
-                   encoding="ISO-8859-1",
-                   skiprows=1)
 x_test, y_test, x_train, y_train = get_data(data_path, train_size, test_size, data_headers, skip_rows=1)
+
 X = pd.concat([x_test, x_train])
 Y = pd.concat([y_test, y_train])
 
@@ -57,8 +53,9 @@ history = model.fit(x_train, y_train,
                     validation_data=(x_test, y_test))
 
 plot_training_results(history)
+
 y_pred = model.predict_classes(x_test)
 plot_confusion_matrix(y_test[4], y_pred, [0, 1], ['Negative', 'Positive'], "/home/sabir/Documents/", normalize=True)
 
 model_json = model.to_json()
-save_model("./lstm.json", "../../server/models/LSTM/lstm.h5", model_json, model)
+save_model("./resources/lstm/lstm.json", ".../resources/lstm/lstm.h5", model_json, model)
