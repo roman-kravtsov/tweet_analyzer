@@ -9,6 +9,8 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.model_selection import train_test_split
 
+
+from util.preprocessor import preprocess
 from util.plot import plot_training_results, plot_confusion_matrix
 from util.data_util import get_data
 from util.model import save_model
@@ -19,10 +21,13 @@ data_headers = ["polarity", "id", "date", "query", "user", "text"]
 
 train_size = 100000
 test_size = train_size * 0.2
-batch_size = 200
-train_epochs = 30
+batch_size = 2056
+train_epochs = 5
 
 x_test, y_test, x_train, y_train = get_data(data_path, train_size, test_size, data_headers, skip_rows=1)
+
+x_test, y_test = preprocess(x_test, y_test)
+x_train, y_train = preprocess(x_train, y_train)
 
 X = pd.concat([x_test, x_train])
 Y = pd.concat([y_test, y_train])
@@ -47,8 +52,8 @@ model.add(Dense(2, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 history = model.fit(x_train, y_train,
-                    batch_size=32,
-                    epochs=3,
+                    batch_size=batch_size,
+                    epochs=train_epochs,
                     verbose=2,
                     validation_data=(x_test, y_test))
 
