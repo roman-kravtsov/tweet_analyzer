@@ -1,14 +1,12 @@
 <template>
-  <v-container>
-    <!-- <v-card-title> -->
+  <v-container class="tweet">
     <v-icon medium left>fab fa-twitter-square</v-icon>
-    <!-- </v-card-title> -->
-    <dib class="josefin">
-      Welcome to
+    <div class="josefin">
+      Welcome to the
       <strong>Tweet Analyzer</strong>. This fancy
       application will analyze the sentiment of your tweet. Please type
       in your future tweet below.
-    </dib>
+    </div>
     <v-list-tile class="grow">
       <v-layout align-center justify-end>
         <v-icon class="mr-1">far fa-heart</v-icon>
@@ -29,7 +27,12 @@ export default {
   })
 };
 </script>
-<style >
+
+<style>
+.tweet {
+  background-color: rgb(173, 214, 253);
+  border-radius: 25px;
+}
 .josefin {
   font-size: 18px !important;
   font-weight: 400;
