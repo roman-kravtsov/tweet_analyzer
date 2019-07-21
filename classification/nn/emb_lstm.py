@@ -62,4 +62,4 @@ y_pred = model.predict_classes(x_test)
 plot_confusion_matrix(y_test[4], y_pred, [0, 1], ['Negative', 'Positive'], "/home/sabir/Documents/", normalize=True)
 
 model_json = model.to_json()
-save_model("./lstm.json", "../../server/models/LSTM/lstm.h5", model_json, model)
+save_model("./resources/lstm/lstm.json", ".../resources/lstm/lstm.h5", model_json, model)
