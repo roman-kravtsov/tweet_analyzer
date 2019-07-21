@@ -24,7 +24,7 @@
 <script>
 const names = {
   emb_cnn_lstm: "CNN with Embeddings and LSTM",
-  tfidf_nb: "Naive Bayes Classifier with TFiDF Vectorizer",
+  tfidf_nb: "Naive Bayes with TFiDF Vectorizer",
   tfidf_svc: "SVC with TFiDF Vectorizer",
   w2v_cnn: "CNN with Word2Vec Vectorizer"
 };
