@@ -34,7 +34,7 @@ export default {
 <style scoped>
 span {
   font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans;
-  font-size: 3.5em;
+  font-size: 3.3em;
 }
 .v-toolbar {
   background-color: #fafafa;
