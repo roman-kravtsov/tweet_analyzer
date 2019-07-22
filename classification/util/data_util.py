@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.utils import shuffle
 
 
-def get_data(path, train_size, test_size, headers, sep='\t', skip_rows=0):
+def get_data(path, train_size, test_size, headers, skip_rows=0):
     """ Loads data from the specified path with given training and test split sizes"""
 
     data = pd.read_csv(path,
@@ -10,9 +10,7 @@ def get_data(path, train_size, test_size, headers, sep='\t', skip_rows=0):
                        low_memory=False,
                        header=None,
                        encoding="ISO-8859-1",
-                       skiprows=skip_rows
-                       sep=sep
-                       )
+                       skiprows=skip_rows)
 
     data = shuffle(data, random_state=9016832).reset_index(drop=True)
 
