@@ -21,11 +21,11 @@
 
 <script>
 export default {
-  name: "Introduction",
+  name: 'Introduction',
   data: () => ({
     //
   })
-};
+}
 </script>
 
 <style>

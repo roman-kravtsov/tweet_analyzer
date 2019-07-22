@@ -21,64 +21,64 @@
 </template>
 
 <script>
-import { debounce } from "lodash";
-import Introduction from "./Introduction";
-import Sentiment from "./Sentiment";
+import { debounce } from 'lodash'
+import Introduction from './Introduction'
+import Sentiment from './Sentiment'
 
 export default {
-  name: "Analyzer",
+  name: 'Analyzer',
   components: {
     Introduction,
     Sentiment
   },
-  data() {
+  data () {
     return {
-      text: "",
+      text: '',
       isLoading: false,
-      answer: "Nothing to analyze"
-    };
-  },
-  watch: {
-    text() {
-      this.answer = "Waiting until you stop typing...";
-      this.debouncedGetSentiment();
+      answer: 'Nothing to analyze'
     }
   },
-  created() {
-    this.debouncedGetSentiment = debounce(this.getSentiment, 450);
+  watch: {
+    text () {
+      this.answer = 'Waiting until you stop typing...'
+      this.debouncedGetSentiment()
+    }
+  },
+  created () {
+    this.debouncedGetSentiment = debounce(this.getSentiment, 450)
   },
   methods: {
-    async getSentiment() {
+    async getSentiment () {
       if (this.text.length === 0) {
-        this.answer = "Nothing to analyze";
-        return;
+        this.answer = 'Nothing to analyze'
+        return
       }
-      this.isLoading = true;
-      await new Promise(resolve => setTimeout(resolve, 500));
-      const vm = this;
-      fetch("http://127.0.0.1:5000/predict", {
-        method: "post",
+      this.isLoading = true
+      await new Promise(resolve => setTimeout(resolve, 500))
+      const vm = this
+      fetch('http://127.0.0.1:5000/predict', {
+        method: 'post',
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ tweet: vm.text })
       })
         .then(response => response.json())
         .then(response => {
-          vm.isLoading = false;
-          vm.answer = response;
+          vm.isLoading = false
+          vm.answer = response
         })
-        .catch(function(error) {
-          vm.isLoading = false;
-          vm.answer = `Error! ${error}`;
-        });
+        .catch(function (error) {
+          vm.isLoading = false
+          vm.answer = `Error! ${error}`
+        })
     },
-    disableLoading() {
-      this.isLoading = false;
+    disableLoading () {
+      this.isLoading = false
     }
   }
-};
+}
 </script>
 
 <style scoped>

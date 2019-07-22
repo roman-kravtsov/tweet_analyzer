@@ -14,21 +14,21 @@
 </template>
 
 <script>
-import Footer from "./components/Footer";
-import Analyzer from "./components/Analyzer";
+import Footer from './components/Footer'
+import Analyzer from './components/Analyzer'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     Footer,
     Analyzer
   },
-  data() {
+  data () {
     return {
       //
-    };
+    }
   }
-};
+}
 </script>
 
 <style scoped>

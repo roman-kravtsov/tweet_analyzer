@@ -25,63 +25,64 @@
 
 <script>
 const names = {
-  emb_cnn_lstm: "CNN with Embeddings and LSTM",
-  tfidf_nb: "Naive Bayes with TFiDF Vectorizer",
-  tfidf_svc: "SVC with TFiDF Vectorizer",
-  w2v_cnn: "CNN with Word2Vec Vectorizer"
-};
+  emb_cnn_lstm: 'CNN with Embeddings and LSTM',
+  tfidf_nb: 'Naive Bayes with TFiDF Vectorizer',
+  tfidf_svc: 'SVC with TFiDF Vectorizer',
+  w2v_cnn: 'CNN with Word2Vec Vectorizer'
+}
 export default {
-  name: "Sentiment",
+  name: 'Sentiment',
   props: {
     answer: {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       expanded: false
-    };
+    }
   },
   computed: {
-    expandedMode() {
-      return this.expanded && typeof this.answer == "object";
+    expandedMode () {
+      return this.expanded && typeof this.answer === 'object'
     },
-    sentiment() {
-      let final_sentiment = { 0: 0, 1: 0 };
-      if (typeof this.answer === "object") {
+    sentiment () {
+      let finalSentiment = { 0: 0, 1: 0 }
+      if (typeof this.answer === 'object') {
         for (const sentiment of Object.values(this.answer)) {
-          final_sentiment[sentiment] += 1;
+          finalSentiment[sentiment] += 1
         }
-        if (this.answer.emb_cnn_lstm == this.answer.w2v_cnn) {
-          final_sentiment[this.answer.emb_cnn_lstm] += 2;
+        if (this.answer.emb_cnn_lstm === this.answer.w2v_cnn) {
+          finalSentiment[this.answer.emb_cnn_lstm] += 2
         }
-        final_sentiment =
-          final_sentiment[0] > final_sentiment[1]
-            ? "Tweet is Negative 😟"
-            : "Tweet is Positive 😊";
+        finalSentiment =
+          finalSentiment[0] > finalSentiment[1]
+            ? 'Tweet is Negative 😟'
+            : 'Tweet is Positive 😊'
       } else {
-        final_sentiment = this.answer;
+        finalSentiment = this.answer
       }
-      return final_sentiment;
+      return finalSentiment
     },
-    sentiments() {
-      let sentiments = this.answer;
-      if (typeof this.answer === "object") {
-        sentiments = {};
+    sentiments () {
+      let sentiments = this.answer
+      if (typeof this.answer === 'object') {
+        sentiments = {}
         for (const model in this.answer) {
-          let answer = this.answer[model] == 0 ? "Negative 😟" : "Positive 😊";
-          sentiments[names[model]] = answer;
+          // eslint-disable-next-line
+          let answer = this.answer[model] == 0 ? 'Negative 😟' : 'Positive 😊'
+          sentiments[names[model]] = answer
         }
       }
-      return sentiments;
+      return sentiments
     }
   },
   methods: {
-    expand() {
-      this.expanded = !this.expanded;
+    expand () {
+      this.expanded = !this.expanded
     }
   }
-};
+}
 </script>
 
 <style >
