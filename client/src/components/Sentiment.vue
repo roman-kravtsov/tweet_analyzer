@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="!expandedMode">
+  <v-container v-if="!expandedMode" class="sentiment">
     <v-layout align-center justify-center column fill-height>
       <p class="headline mb-0 text-xs-center">{{ sentiment }}</p>
       <v-btn
@@ -11,7 +11,7 @@
       >Show every sentiment</v-btn>
     </v-layout>
   </v-container>
-  <v-container v-else>
+  <v-container v-else class="sentiment">
     <span class="sentiments" v-for="(sentiment, name) in sentiments" :key="name">
       <p class="headline mb-0 text-xs-center">{{ name }}</p>
       <v-spacer></v-spacer>
@@ -85,13 +85,8 @@ export default {
 </script>
 
 <style >
-.centered {
-  margin-top: 5%;
-  position: relative;
-  float: left;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.sentiment {
+  margin-top: -7%;
 }
 .sentiments {
   display: flex;
