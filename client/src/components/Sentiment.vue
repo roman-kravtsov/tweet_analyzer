@@ -17,7 +17,9 @@
       <v-spacer></v-spacer>
       <p class="headline mb-0 text-xs-center">{{ sentiment }}</p>
     </span>
-    <v-btn large depressed color="info" class="centered" @click="expand">Close</v-btn>
+    <v-layout align-center justify-center column fill-height>
+      <v-btn large depressed color="info" @click="expand">Close</v-btn>
+    </v-layout>
   </v-container>
 </template>
 
@@ -49,6 +51,9 @@ export default {
       if (typeof this.answer === "object") {
         for (const sentiment of Object.values(this.answer)) {
           final_sentiment[sentiment] += 1;
+        }
+        if (this.answer.emb_cnn_lstm == this.answer.w2v_cnn) {
+          final_sentiment[this.answer.emb_cnn_lstm] += 2;
         }
         final_sentiment =
           final_sentiment[0] > final_sentiment[1]
